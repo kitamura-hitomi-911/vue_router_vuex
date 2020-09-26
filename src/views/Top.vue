@@ -8,10 +8,10 @@
       <div class="cmn_box-main">
         <ul>
           <li>
-            <router-link :to="{name:'Top'}">Home</router-link>
+            <router-link :to="{name:'Event'}">イベント</router-link>
           </li>
           <li>
-            <router-link :to="{name:'Event'}">イベント</router-link>
+            <router-link :to="{name:'Tour'}">大会</router-link>
           </li>
         </ul>
       </div>

@@ -1,8 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Top from '../views/Top.vue'
 import Login from '../views/Login.vue'
+import Top from '../views/Top.vue'
+import Event from '../views/Event.vue'
+import EventDetail from '../views/EventDetail.vue'
+import Tour from '../views/Tour.vue'
+
 import isAuthed from '@/middleware/isAuthed';
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -22,14 +27,29 @@ const routes = [
   {
     path: '/event',
     name: 'Event',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Event.vue'),
+    // component: () => import(/* webpackChunkName: "about" */ '../views/Event.vue'),
+    component: Event,
     meta:{
-      is_request_auth:true
+      isRequestAuth:true
     }
-  }
+  },
+  {
+    path: '/event/:url_name',
+    name: 'EventDetail',
+    component: EventDetail,
+    props:true, // 変数をコンポーネントにpropsで渡す
+    meta:{
+      isRequestAuth:true
+    }
+  },
+  {
+    path: '/tour',
+    name: 'Tour',
+    component: Tour,
+    meta:{
+      isRequestAuth:true
+    }
+  },
 ]
 
 const router = new VueRouter({

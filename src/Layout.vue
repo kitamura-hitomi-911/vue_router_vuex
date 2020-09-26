@@ -20,9 +20,14 @@
 
   export default {
     name: 'Layout',
+    data(){
+      return {
+        is_request_auth : !!this.$route.meta.isRequestAuth
+      }
+    },
     computed:{
       is_login(){
-        return !!this.$route.meta.isRequestAuth;
+        return this.is_request_auth;
       }
     },
     components: {
@@ -39,18 +44,6 @@
       margin:0 auto;
     }
   }
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
 </style>
 
 

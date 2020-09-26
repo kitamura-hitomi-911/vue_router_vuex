@@ -2,7 +2,7 @@
   <div>
     <div class="cmn_box">
       <div class="cmn_box-ttl">
-        <h2>イベント一覧</h2>
+        <h2>大会一覧</h2>
       </div>
       <div class="cmn_box-main">
         <ul>
@@ -12,7 +12,7 @@
         </ul>
       </div>
     </div>
-    <div class="l-btm_btns">
+    <div class="btm_btns">
       <p class="btn btn-back">
         <router-link :to="{name:'Top'}">戻る</router-link>
       </p>
@@ -24,12 +24,9 @@
   import { mapGetters } from 'vuex'
 
   export default {
-    name: 'Event',
+    name: 'Tour',
     computed:{
-      list(){
-        return this.getEvents();
-      },
-      ...mapGetters('events',['getEvents'])
+      ...mapGetters('events',{list:'getEvents'})
     },
     components: {
 
