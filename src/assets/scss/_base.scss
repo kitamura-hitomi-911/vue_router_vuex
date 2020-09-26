@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+body{
+	color:$color;
+	background-color:$bgcolor;
+	font-family: Avenir, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a:link {
+	color: $a_color;
+}
+a:visited {
+	color: $a_color;
+}
+a:hover,
+a:active,
+a:focus {
+	color: $a_color_hover;
+}
