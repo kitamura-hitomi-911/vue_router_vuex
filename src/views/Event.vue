@@ -21,7 +21,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import { mapGetters,mapActions } from 'vuex'
   import { mixin_page_title } from '@/plugins/mixin_page_title';
 
   export default {
@@ -33,8 +33,25 @@
       },
       ...mapGetters('events',['getEvents'])
     },
-    components: {
+    created(){
+      this.getAllEvents().then(() => {
+        console.log('イベント全取得処理完了');
+      });
 
+      // this.$storeからたたく
+      // パラメータがあるとき
+      // this.$store.dispatch('events/getAllEvents');
+      // this.$store.dispatch('events/getAllEvents',{key:100});
+
+      // 以下の書き方でもいける
+      // this.$store.dispatch({type:'events/getAllEvents'});
+      // this.$store.dispatch({type:'events/getAllEvents',key:100});
+
+      // 以下の書き方はできない
+      // this.$store.dispatch('events',{type:'getAllEvents'});
+    },
+    methods: {
+      ...mapActions('events',['getAllEvents'])
     }
   }
 </script>

@@ -62,17 +62,24 @@ const router = new VueRouter({
   routes
 });
 
-router.beforeEach((to,from,next) => {
-    if(to.matched.some(route => route.meta.isRequestAuth) && !isAuthed()){
-      next({
-        path: '/login',
-        query:{
-          path:to.fullPath
-        }
-      })
-    }else{
-      next();
-    }
-  });
+router.beforeEach( (to,from,next) => {
+  if(to.matched.some(route => route.meta.isRequestAuth)){
+    isAuthed().then(is_login => {
+      if(is_login){
+        next();
+      }else{
+        next({
+          path: '/login',
+          query:{
+            path:to.fullPath
+          }
+        })
+      }
+    });
+  }else{
+    // ログインページだった場合は、パラメータ先のページに遷移する処理をいれる
+    next();
+  }
+});
 
 export default router

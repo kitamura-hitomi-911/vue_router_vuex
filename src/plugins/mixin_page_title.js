@@ -9,7 +9,7 @@ export const mixin_page_title = {
       let _title = '',
         _site_title = 'Backoffice',
         _route = to || this.$route;
-      
+
       if(_route.meta.title){
         let _page_title = _route.meta.title;
         this.page_title_replace_settings.forEach(replace_setting => {
