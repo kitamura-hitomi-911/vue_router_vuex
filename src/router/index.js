@@ -22,7 +22,10 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta:{
+      title:'ログイン'
+    }
   },
   {
     path: '/event',
@@ -30,7 +33,8 @@ const routes = [
     // component: () => import(/* webpackChunkName: "about" */ '../views/Event.vue'),
     component: Event,
     meta:{
-      isRequestAuth:true
+      isRequestAuth:true,
+      title:'イベント一覧'
     }
   },
   {
@@ -39,7 +43,8 @@ const routes = [
     component: EventDetail,
     props:true, // 変数をコンポーネントにpropsで渡す
     meta:{
-      isRequestAuth:true
+      isRequestAuth:true,
+      title:'イベント詳細(__EVENT_NAME__)'
     }
   },
   {
@@ -47,7 +52,8 @@ const routes = [
     name: 'Tour',
     component: Tour,
     meta:{
-      isRequestAuth:true
+      isRequestAuth:true,
+      title:'大会一覧'
     }
   },
 ]

@@ -22,7 +22,7 @@
     name: 'Layout',
     data(){
       return {
-        is_request_auth : !!this.$route.meta.isRequestAuth
+        is_request_auth : !!this.$route.meta.isRequestAuth,
       }
     },
     computed:{

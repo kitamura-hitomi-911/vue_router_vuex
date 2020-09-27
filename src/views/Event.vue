@@ -22,9 +22,11 @@
 
 <script>
   import { mapGetters } from 'vuex'
+  import { mixin_page_title } from '@/plugins/mixin_page_title';
 
   export default {
     name: 'Event',
+    mixins:[mixin_page_title],
     computed:{
       list(){
         return this.getEvents();

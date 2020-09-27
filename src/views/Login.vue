@@ -5,8 +5,10 @@
 </template>
 
 <script>
+  import { mixin_page_title } from '@/plugins/mixin_page_title';
   export default {
-    name: 'Login'
+    name: 'Login',
+    mixins:[mixin_page_title],
   };
 </script>
 
