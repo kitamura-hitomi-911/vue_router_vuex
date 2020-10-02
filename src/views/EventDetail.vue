@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="event">
+    <div class="loading" v-if="is_loading">ローディング</div>
+    <div class="event" v-else>
       <dl>
         <dt>イベント名</dt>
         <dd>{{event.name}}</dd>
@@ -15,7 +16,7 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex'
+  import {mapState,mapActions, mapGetters} from 'vuex';
   import { mixin_page_title } from '@/plugins/mixin_page_title';
 
   export default {
@@ -23,6 +24,7 @@
     mixins:[mixin_page_title],
     data(){
       return {
+        is_loading:true,
         page_title_replace_settings:[]
       }
     },
@@ -32,25 +34,36 @@
         requied:true
       }
     },
-    created(){
-      // title用文字列置換
-      this.page_title_replace_settings.push(
-        {
-          replaced_str: '__EVENT_NAME__',
-          replace_str: this.event.name
-        }
-      );
-      this.setPageTitle();
-    },
     computed:{
       event(){
         let _event = this.getEvents({url_name:this.url_name});
         return _event.length ? _event[0] : null;
       },
+      ...mapState('events',['is_loaded']),
       ...mapGetters('events',['getEvents'])
     },
-    components: {
-
+    methods: {
+      onGetAllEvents(){
+        console.log('イベント取得完了');
+        this.is_loading = false;
+        this.page_title_replace_settings.push(
+          {
+            replaced_str: '__EVENT_NAME__',
+            replace_str: this.event.name
+          }
+        );
+        this.setPageTitle();
+      },
+      ...mapActions('events',['getAllEvents','updateEvents'])
+    },
+    watch:{
+      '$route':{
+        handler(){
+          this.is_loading = true;
+          this.getAllEvents().then(this.onGetAllEvents);
+        },
+        immediate:true
+      }
     }
   }
 </script>

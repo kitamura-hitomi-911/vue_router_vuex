@@ -5,7 +5,8 @@
         <h2>イベント一覧</h2>
       </div>
       <div class="cmn_box-main">
-        <ul>
+        <div class="loading" v-if="is_loading">ローディング</div>
+        <ul v-else>
           <li v-for="event in list" :key="event.id">
             <router-link :to="{name:'EventDetail',params:{url_name:event.url_name}}">{{event.name}}</router-link>
           </li>
@@ -21,16 +22,22 @@
 </template>
 
 <script>
-  import { mapGetters,mapActions } from 'vuex'
+  import { mapState, mapGetters,mapActions } from 'vuex'
   import { mixin_page_title } from '@/plugins/mixin_page_title';
 
   export default {
     name: 'Event',
     mixins:[mixin_page_title],
+    data(){
+      return {
+        is_loading:true,
+      }
+    },
     computed:{
       list(){
         return this.getEvents();
       },
+      ...mapState('events',['is_loaded']),
       ...mapGetters('events',['getEvents'])
     },
     created(){
@@ -51,7 +58,20 @@
       // this.$store.dispatch('events',{type:'getAllEvents'});
     },
     methods: {
+      onGetAllEvents(){
+        console.log('イベント取得完了');
+        this.is_loading = false;
+      },
       ...mapActions('events',['getAllEvents'])
+    },
+    watch:{
+      '$route':{
+        handler(){
+          this.is_loading = true;
+          this.getAllEvents().then(this.onGetAllEvents);
+        },
+        immediate:true
+      }
     }
   }
 </script>

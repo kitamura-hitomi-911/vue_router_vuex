@@ -34,14 +34,24 @@ export default {
     }
   },
   mutations: {
-    // type が setEvents ミューテーションがトリガーされたときに、このハンドラが呼ばれる
+    // type が setAllEvents ミューテーションがトリガーされたときに、このハンドラが呼ばれる
     // ミューテーションハンドラを起動するためにはミューテーションのタイプを指定して store.commit を呼び出す必要があります
     // ハンドラは vuex の状態(state)を第一引数として取得する
     // 追加の引数は payload とよび、通常はオブジェクトにすべき
     // ミューテーションハンドラ関数は同期的でなければならない
-    setEvents(state, payload){
+    setAllEvents(state, payload){
       console.log(state);
       state.list = payload.list;
+    },
+    updateEvents(state, payload){
+      state.list.forEach(event => {
+        payload.list.forEach(update_event => {
+          if(event.id === update_event.id){
+            console.log(event,update_event);
+            // event = update_event;
+          }
+        });
+      });
     }
   },
   actions: {
@@ -57,11 +67,33 @@ export default {
       return new Promise((resolve, reject) => {
         setTimeout(()=>{
           // comit は 1つめにmutationsのメソッド名、2つめにmutations のメソッドに渡す値。オブジェクト推奨
-          commit('setEvents',{list});
+          commit('setAllEvents',{list});
           resolve();
           reject();
         },2000)
       });
+    },
+    getEvent({ commit }, params){
+      // イベント取得APIをたたくダミー
+      return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+          // comit は 1つめにmutationsのメソッド名、2つめにmutations のメソッドに渡す値。オブジェクト推奨
+          let tgt_events = list.filter( event => {
+            let _flg = true;
+            for(let key in params){
+              if(event[key] !== params[key]){
+                _flg = false;
+              }
+            }
+            return _flg;
+          });
+          commit('updateEvents',{list:tgt_events});
+          resolve();
+          reject();
+        },2000)
+      });
+
+
     }
   }
 };
