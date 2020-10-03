@@ -2,9 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../views/Login.vue'
 import Top from '../views/Top.vue'
-import Event from '../views/Event.vue'
-import EventDetail from '../views/EventDetail.vue'
-import EventCreate from '../views/EventCreate.vue'
+import EventRoutes from './event-routes.js'
 import Tour from '../views/Tour.vue'
 import NotFound from '../views/NotFound.vue'
 
@@ -29,61 +27,7 @@ const routes = [
       title:'ログイン'
     }
   },
-  {
-    path: '/event',
-    name: 'Event',
-    // component: () => import(/* webpackChunkName: "about" */ '../views/Event.vue'),
-    component: Event,
-    meta:{
-      isRequestAuth:true,
-      title:'イベント一覧'
-    },
-    children:[
-      {
-        path: '/create/input',
-        name: 'EventInput',
-        component: EventCreate,
-        meta:{
-          isRequestAuth:true,
-          title:'イベント新規登録'
-        }
-      },
-      {
-        path: '/:url_name',
-        redirect: { name: 'EventEditInput' }
-      },
-      {
-        path: '/:url_name/edit',
-        name: 'EventEditInput',
-        component: EventDetail,
-        props:true, // 変数をコンポーネントにpropsで渡す
-        meta:{
-          isRequestAuth:true,
-          title:'イベント詳細(__EVENT_NAME__)'
-        }
-      },
-      {
-        path: '/:url_name/edit_confirm',
-        name: 'EventEditConfirm',
-        component: EventDetail,
-        props:true, // 変数をコンポーネントにpropsで渡す
-        meta:{
-          isRequestAuth:true,
-          title:'イベント更新-確認(__EVENT_NAME__)'
-        }
-      },
-      {
-        path: '/:url_name/edit_complete',
-        name: 'EventEditComplete',
-        component: EventDetail,
-        props:true, // 変数をコンポーネントにpropsで渡す
-        meta:{
-          isRequestAuth:true,
-          title:'イベント更新-完了(__EVENT_NAME__)'
-        }
-      }
-    ]
-  },
+  { ...EventRoutes },
   {
     path: '/tour',
     name: 'Tour',
