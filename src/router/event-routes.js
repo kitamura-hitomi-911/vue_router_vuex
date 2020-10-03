@@ -1,4 +1,4 @@
-export default   {
+export default {
   path: '/event',
   name: 'Event',
   component: () => import('@/views/Event.vue'),
@@ -8,7 +8,7 @@ export default   {
   },
   children:[
     {
-      path: '/create/input',
+      path: 'create/input',/* ルートから書くとルートからのパス扱いになるので、頭の / は書かない！ */
       name: 'EventInput',
       component: () => import('@/views/EventCreate.vue'),
       meta:{
@@ -17,11 +17,7 @@ export default   {
       }
     },
     {
-      path: '/:url_name',
-      redirect: { name: 'EventEditInput' }
-    },
-    {
-      path: '/:url_name/edit',
+      path: ':url_name/edit',
       name: 'EventEditInput',
       component: () => import('@/views/EventDetail.vue'),
       props:true, // 変数をコンポーネントにpropsで渡す
@@ -31,7 +27,7 @@ export default   {
       }
     },
     {
-      path: '/:url_name/edit_confirm',
+      path: ':url_name/edit_confirm',
       name: 'EventEditConfirm',
       component: () => import('@/views/EventDetail.vue'),
       props:true, // 変数をコンポーネントにpropsで渡す
@@ -41,7 +37,7 @@ export default   {
       }
     },
     {
-      path: '/:url_name/edit_complete',
+      path: ':url_name/edit_complete',
       name: 'EventEditComplete',
       component: () => import('@/views/EventDetail.vue'),
       props:true, // 変数をコンポーネントにpropsで渡す
@@ -49,6 +45,10 @@ export default   {
         isRequestAuth:true,
         title:'イベント更新-完了(__EVENT_NAME__)'
       }
+    },
+    {
+      path: ':url_name',
+      redirect: { name: 'EventEditInput' }
     }
   ]
 }

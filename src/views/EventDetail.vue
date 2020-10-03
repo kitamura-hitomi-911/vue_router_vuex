@@ -45,9 +45,15 @@
       ...mapState('events',['is_loaded']),
       ...mapGetters('events',['getEvents'])
     },
+    mounted(){
+      console.log('EventDetailMounted');
+    },
+    created(){
+      console.log('EventDetailCreated');
+    },
     methods: {
       onGetAllEvents(){
-        console.log('イベント取得完了');
+        console.log('イベント取得完了@イベント詳細ページ');
         this.page_title_replace_settings.push(
           {
             replaced_str: '__EVENT_NAME__',
@@ -63,7 +69,7 @@
         handler(new_val){
           if(!new_val){
             console.log('Eventから受け取ったis_loading が false になった！');
-            this.onGetAllEvents
+            this.onGetAllEvents();
           }
 
         },

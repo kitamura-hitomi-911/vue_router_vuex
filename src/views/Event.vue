@@ -47,9 +47,15 @@
       ...mapState('events',['is_loaded']),
       ...mapGetters('events',['getEvents'])
     },
+    mounted(){
+      console.log('EventMounted');
+    },
+    created(){
+      console.log('EventCreated');
+    },
     methods: {
       onGetAllEvents(){
-        console.log('イベント取得完了');
+        console.log('イベント取得完了@イベント一覧ページ');
         this.is_loading = false;
       },
       ...mapActions('events',['getAllEvents'])
@@ -57,7 +63,7 @@
     watch:{
       '$route':{
         handler(){
-          console.log('Event');
+          console.log('EventRouteWatch');
           this.is_loading = true;
           this.getAllEvents().then(this.onGetAllEvents);
 
