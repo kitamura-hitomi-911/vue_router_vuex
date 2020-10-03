@@ -1,14 +1,7 @@
 <template>
   <div>
     <div class="loading" v-if="is_loading">ローディング</div>
-    <EventForm :is_disp="!is_loading" v-else></EventForm>
-
-    <div class="event" v-if="!is_loading">
-      <dl>
-        <dt>イベント名</dt>
-        <dd>{{event.name}}</dd>
-      </dl>
-    </div>
+    <EventForm :is_disp="!is_loading" :url_name="url_name" v-else></EventForm>
     <div class="l-btm_btns">
       <p class="btn btn-back">
         <router-link :to="{name:'Event'}">イベント一覧に戻る</router-link>
