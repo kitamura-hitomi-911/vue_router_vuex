@@ -6,6 +6,7 @@ import Event from '../views/Event.vue'
 import EventDetail from '../views/EventDetail.vue'
 import EventCreate from '../views/EventCreate.vue'
 import Tour from '../views/Tour.vue'
+import NotFound from '../views/NotFound.vue'
 
 import isAuthed from '@/middleware/isAuthed';
 
@@ -48,6 +49,10 @@ const routes = [
         }
       },
       {
+        path: '/:url_name',
+        redirect: { name: 'EventEditInput' }
+      },
+      {
         path: '/:url_name/edit',
         name: 'EventEditInput',
         component: EventDetail,
@@ -88,6 +93,15 @@ const routes = [
       title:'大会一覧'
     }
   },
+  {
+    // 全てにマッチします
+    path: '*',
+    name: 'NotFound',
+    component: NotFound,
+    meta:{
+      title:'404 Not Found'
+    }
+  }
 ]
 
 const router = new VueRouter({
