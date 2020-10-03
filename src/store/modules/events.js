@@ -60,6 +60,7 @@ export default {
     // context.commit で mutations にアクセスできるので、commitだけに用がある場合は
     // {commit} という 引数分割束縛 という書き方をすることが多い
     // アクションは store.dispatch がトリガーとなって実行される
+    // パラメータがある場合は getAllEvents({ commit },params) で受け取れる。
     getAllEvents({ commit }){
       // イベント取得APIをたたくダミー
 
@@ -73,27 +74,5 @@ export default {
         },2000)
       });
     },
-    getEvent({ commit }, params){
-      // イベント取得APIをたたくダミー
-      return new Promise((resolve, reject) => {
-        setTimeout(()=>{
-          // comit は 1つめにmutationsのメソッド名、2つめにmutations のメソッドに渡す値。オブジェクト推奨
-          let tgt_events = list.filter( event => {
-            let _flg = true;
-            for(let key in params){
-              if(event[key] !== params[key]){
-                _flg = false;
-              }
-            }
-            return _flg;
-          });
-          commit('updateEvents',{list:tgt_events});
-          resolve();
-          reject();
-        },2000)
-      });
-
-
-    }
   }
 };

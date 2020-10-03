@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="loading" v-if="is_loading">ローディング</div>
-    <div class="event" v-else>
+    <EventForm :is_disp="!is_loading" v-else></EventForm>
+
+    <div class="event" v-if="!is_loading">
       <dl>
         <dt>イベント名</dt>
         <dd>{{event.name}}</dd>
@@ -16,7 +18,8 @@
 </template>
 
 <script>
-  import {mapState,mapActions, mapGetters} from 'vuex';
+  import {mapGetters} from 'vuex';
+  import EventForm from '@/containers/EventForm.vue';
   import { mixin_page_title } from '@/plugins/mixin_page_title';
 
   export default {
@@ -42,7 +45,6 @@
         let _event = this.getEvents({url_name:this.url_name});
         return _event.length ? _event[0] : null;
       },
-      ...mapState('events',['is_loaded']),
       ...mapGetters('events',['getEvents'])
     },
     mounted(){
@@ -50,6 +52,9 @@
     },
     created(){
       console.log('EventDetailCreated');
+    },
+    components:{
+      EventForm
     },
     methods: {
       onGetAllEvents(){
@@ -62,7 +67,6 @@
         );
         this.setPageTitle();
       },
-      ...mapActions('events',['getAllEvents','updateEvents'])
     },
     watch:{
       'is_loading':{
