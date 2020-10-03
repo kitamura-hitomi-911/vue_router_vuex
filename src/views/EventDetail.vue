@@ -24,11 +24,14 @@
     mixins:[mixin_page_title],
     data(){
       return {
-        is_loading:true,
         page_title_replace_settings:[]
       }
     },
     props:{
+      is_loading:{
+        type:Boolean,
+        requied:true
+      },
       url_name:{
         type:String,
         requied:true
@@ -45,7 +48,6 @@
     methods: {
       onGetAllEvents(){
         console.log('イベント取得完了');
-        this.is_loading = false;
         this.page_title_replace_settings.push(
           {
             replaced_str: '__EVENT_NAME__',
@@ -57,10 +59,13 @@
       ...mapActions('events',['getAllEvents','updateEvents'])
     },
     watch:{
-      '$route':{
-        handler(){
-          this.is_loading = true;
-          this.getAllEvents().then(this.onGetAllEvents);
+      'is_loading':{
+        handler(new_val){
+          if(!new_val){
+            console.log('Eventから受け取ったis_loading が false になった！');
+            this.onGetAllEvents
+          }
+
         },
         immediate:true
       }
