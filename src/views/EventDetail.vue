@@ -6,7 +6,7 @@
     </div>
     <div class="l-btm_btns">
       <p class="btn btn-back">
-        <router-link :to="{name:'Event'}">イベント一覧に戻る</router-link>
+        <router-link :to="{name:'Event'}" class="hoge">イベント一覧に戻る</router-link>
       </p>
       <p class="btn btn_next">
         <a href="#" @click.prevent="submitForm">確認</a>
@@ -98,6 +98,7 @@
       },
       submitForm(){
         console.log('送信');
+        this.$router.push({ name: 'EventEditConfirm', params: { url_name: this.url_name } })
       }
     },
     watch:{

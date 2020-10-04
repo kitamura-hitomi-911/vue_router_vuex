@@ -1,7 +1,7 @@
 <template>
     <div class="form_item">
         <template v-if="is_view">
-            {{item_data.label}}{{tmp_value}}
+            {{item_data.label}}{{tmp_value_d}}
         </template>
         <template v-else>
             <component :is="component_name" :item_data="item_data" :tmp_value="tmp_value" @updateTmp="updateTmp"></component>
@@ -48,6 +48,19 @@
             },
             is_view(){
                 return this.mode === 'view' || !this.item_data.is_editable
+            },
+            tmp_value_d(){
+                // TODO:未入力
+                return Array.isArray(this.tmp_value) ? this.tmp_value.reduce( (_ret, _val) => {
+                    let tmp = this.item_data.list.reduce((_ret, _list_item) => {
+                        _ret = _list_item.value === _val ? _list_item.label : _ret;
+                        return _ret;
+                    },'');
+                    if(tmp){
+                        _ret.push(tmp);
+                    }
+                    return _ret;
+                },[]).join(',') : this.tmp_value;
             }
         },
         components:{
