@@ -1,6 +1,6 @@
 <template>
     <div class="form_item">
-        <template v-if="mode === 'view'">
+        <template v-if="is_view">
             {{item_data.label}}{{tmp_value}}
         </template>
         <template v-else>
@@ -11,6 +11,8 @@
 
 <script>
     import FormInputText from '@/components/FormInputText.vue';
+    import FormInputCheckbox from '@/components/FormInputCheckbox.vue';
+    import FormTextarea from '@/components/FormTextarea.vue';
     export default {
         name: 'FormItem',
         props:{
@@ -38,11 +40,20 @@
         },
         computed:{
             component_name(){
-                return 'FormInputText';
+                return {
+                    input_text:'FormInputText',
+                    input_checkbox:'FormInputCheckbox',
+                    textarea:'FormTextarea'
+                }[this.item_data.form_type] || 'FormInputText';
+            },
+            is_view(){
+                return this.mode === 'view' || !this.item_data.is_editable
             }
         },
         components:{
-            FormInputText
+            FormInputText,
+            FormInputCheckbox,
+            FormTextarea
         },
         methods:{
             updateTmp(obj){

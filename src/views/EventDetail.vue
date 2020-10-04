@@ -2,7 +2,7 @@
   <div>
     <div class="loading" v-if="is_loading">ローディング</div>
     <div class="event_form" v-else>
-      <FormUnit  v-for="unit in units" :unit_data="unit" :key="unit.id" :form_data="event" :tmp_form_data="tmp_event" :mode="mode" @updateTmp="updateTmp"></FormUnit>
+      <FormUnit v-for="unit in units" :unit_data="unit" :key="unit.id" :form_data="event" :tmp_form_data="tmp_event" :mode="mode" @updateTmp="updateTmp"></FormUnit>
     </div>
     <div class="l-btm_btns">
       <p class="btn btn-back">
@@ -48,7 +48,7 @@
     computed:{
       event(){
         let _event = this.getEvents({url_name:this.url_name});
-        return _event.length ? _event[0] : null;
+        return _event.length ? _event[0] : {};
       },
       units(){
         return this.groups.length ? this.groups[0].units : [];
@@ -69,11 +69,22 @@
     },
     methods: {
       updateTmp({name,value}){
-        this.tmp_event[name] = value;
-        console.log(name,value);
+        // 配列かどうかで処理わけ
+        if(Array.isArray(value)){
+          // value が配列の場合は1回リセットして入れなおす
+          this.tmp_event[name].splice(0);
+          value.forEach(update_value => {
+            this.tmp_event[name].push(update_value);
+          });
+        }else{
+          this.tmp_event[name] = value;
+        }
       },
       cloneTour(){
-        this.tmp_event = Object.assign({},this.event);
+        // 配列があるので
+        Object.keys(this.event).forEach(key => {
+          this.tmp_event[key] = Array.isArray(this.event[key]) ? this.event[key].concat() : this.event[key];
+        });
       },
       onGetAllEvents(){
         console.log('イベント取得完了@イベント詳細ページ');

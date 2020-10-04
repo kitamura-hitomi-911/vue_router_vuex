@@ -5,6 +5,8 @@ const list = [
     name:'東京イベント名',
     start_date:'2020/11/11 11:00',
     end_date:'2020/11/11 17:00',
+    checkboxtest:[1],
+    desc:'説明ですー'
   },
   {
     id:2,
@@ -12,6 +14,8 @@ const list = [
     name:'大阪イベント名',
     start_date:'2020/11/11 11:00',
     end_date:'2020/11/11 17:00',
+    checkboxtest:[1,2],
+    desc:'説明ですー'
   }
 ];
 
@@ -22,6 +26,7 @@ export default {
   },
   getters:{
     getEvents:(state) => (params) =>{
+      console.log('getEvents',params);
       return params ? state.list.filter(event => {
         let flg = true;
         for(let key in params){

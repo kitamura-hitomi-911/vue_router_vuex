@@ -1,13 +1,13 @@
 <template>
-    <input type="text" v-model="value" :name="item_data.name" :disabled="item_data.disabled"/>
+    <textarea v-model="value" :name="item_data.name" :disabled="item_data.disabled"></textarea>
 </template>
 
 <script>
     export default {
-        name: 'FormInputText',
+        name: 'FormTextarea',
         props:{
             tmp_value:{
-                type:[String,Number,Array],
+                type:[String,Number],
                 required:true
             },
             item_data:{
@@ -32,7 +32,7 @@
 </script>
 
 <style lang="scss" scoped>
-    input{
+    textarea{
         padding:2px;
         border:1px solid #ccc;
     }
