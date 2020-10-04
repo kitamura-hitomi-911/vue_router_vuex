@@ -11,6 +11,9 @@ export default {
       path: 'create/input',/* ルートから書くとルートからのパス扱いになるので、頭の / は書かない！ */
       name: 'EventInput',
       component: () => import('@/views/EventCreate.vue'),
+      props: {
+        step:'create_input'
+      },
       meta:{
         isRequestAuth:true,
         title:'イベント新規登録'
@@ -20,7 +23,10 @@ export default {
       path: ':url_name/edit',
       name: 'EventEditInput',
       component: () => import('@/views/EventDetail.vue'),
-      props:true, // 変数をコンポーネントにpropsで渡す
+      props: (route) => ({
+        url_name: route.params.url_name,
+        step:'edit_input'
+      }),
       meta:{
         isRequestAuth:true,
         title:'イベント詳細(__EVENT_NAME__)'
@@ -30,7 +36,10 @@ export default {
       path: ':url_name/edit_confirm',
       name: 'EventEditConfirm',
       component: () => import('@/views/EventDetail.vue'),
-      props:true, // 変数をコンポーネントにpropsで渡す
+      props: (route) => ({
+        url_name: route.params.url_name,
+        step:'edit_confirm'
+      }),
       meta:{
         isRequestAuth:true,
         title:'イベント更新-確認(__EVENT_NAME__)'
@@ -40,7 +49,10 @@ export default {
       path: ':url_name/edit_complete',
       name: 'EventEditComplete',
       component: () => import('@/views/EventDetail.vue'),
-      props:true, // 変数をコンポーネントにpropsで渡す
+      props: (route) => ({
+        url_name: route.params.url_name,
+        step:'edit_complete'
+      }),
       meta:{
         isRequestAuth:true,
         title:'イベント更新-完了(__EVENT_NAME__)'

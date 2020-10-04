@@ -40,7 +40,6 @@ export default {
     // 追加の引数は payload とよび、通常はオブジェクトにすべき
     // ミューテーションハンドラ関数は同期的でなければならない
     setAllEvents(state, payload){
-      console.log(state);
       state.list = payload.list;
     },
     updateEvents(state, payload){
