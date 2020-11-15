@@ -4,7 +4,8 @@ import UnitData from '@/plugins/UnitData';
 let unit_data_obj = {
     event:unit_data_event.map( unit => {
         return new UnitData(unit, 'event');
-    })
+    }),
+    tour:null
 };
 
 const getUnitData = {

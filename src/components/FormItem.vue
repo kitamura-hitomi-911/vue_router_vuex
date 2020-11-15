@@ -60,7 +60,7 @@
                         _ret.push(tmp);
                     }
                     return _ret;
-                },[]).join(',') : this.tmp_value;
+                },[]).join('・') : this.tmp_value;
             }
         },
         components:{

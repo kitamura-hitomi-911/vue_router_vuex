@@ -5,11 +5,9 @@
       <FormUnit v-for="unit in units" :unit_data="unit" :key="unit.id" :form_data="event" :tmp_form_data="tmp_event" :mode="mode" @updateTmp="updateTmp"></FormUnit>
     </div>
     <div class="l-btm_btns">
-      <p class="btn btn-back">
-        <router-link :to="{name:'Event'}" class="hoge">イベント一覧に戻る</router-link>
-      </p>
-      <p class="btn btn_next">
-        <a href="#" @click.prevent="submitForm">確認</a>
+      <p class="btn" :class="btn.class_name" v-for="btn in btns" :key="btn.label">
+        <router-link :to="btn.to_obj" v-if="btn.to_obj">{{btn.label}}</router-link>
+        <a href="#" @click.prevent="submitForm" v-else>{{btn.label}}</a>
       </p>
     </div>
   </div>
@@ -27,7 +25,32 @@
       return {
         units:[],
         tmp_event:{},
-        page_title_replace_settings:[]
+        page_title_replace_settings:[],
+        btn_settings:{
+          edit_input: [
+            {
+              class_name: 'btn-back',
+              label: 'イベント一覧に戻る',
+              to_obj: {name: 'Event'}
+            },
+            {
+              class_name: 'btn_next',
+              label: '確認'
+            }
+          ],
+          edit_confirm: [
+            {
+              class_name: 'btn-back',
+              label: '戻る',
+              to_obj: {name: 'EventEditInput'}
+            },
+            {
+              class_name: 'btn_next',
+              label: '上記の内容で更新'
+            }
+          ]
+        }
+
       }
     },
     props:{
@@ -45,6 +68,19 @@
       }
     },
     computed:{
+      btns(){
+        console.log(this.step);
+        console.log(this.btn_settings);
+        return this.btn_settings[this.step];
+      },
+      item_obj_by_name(){
+        return this.units.reduce( (acc,unit) => {
+          unit.items.forEach(item=>{
+            acc[item.name] = item;
+          });
+          return acc;
+        }, {});
+      },
       event(){
         let _event = this.getEvents({url_name:this.url_name});
         return _event.length ? _event[0] : {};
@@ -59,7 +95,6 @@
     },
     created(){
       console.log('EventDetailCreated');
-      //console.log(this.$getUnitData('event'));
       this.units = this.$getUnitData('event');
 
     },
@@ -72,8 +107,11 @@
         if(Array.isArray(value)){
           // value が配列の場合は1回リセットして入れなおす
           this.tmp_event[name].splice(0);
-          value.forEach(update_value => {
-            this.tmp_event[name].push(update_value);
+          // 並び順は units の方に準じる
+          this.item_obj_by_name[name].list.forEach( ({value:list_value}) => {
+            if(value.indexOf(list_value) !== -1){
+              this.tmp_event[name].push(list_value);
+            }
           });
         }else{
           this.tmp_event[name] = value;
