@@ -18,7 +18,6 @@
 <script>
   import {mapGetters} from 'vuex';
   import FormUnit from '@/components/FormUnit.vue';
-  import groups from '@/definition/event';
   import { mixin_page_title } from '@/plugins/mixin_page_title';
 
   export default {
@@ -26,7 +25,7 @@
     mixins:[mixin_page_title],
     data(){
       return {
-        groups,
+        units:[],
         tmp_event:{},
         page_title_replace_settings:[]
       }
@@ -50,9 +49,6 @@
         let _event = this.getEvents({url_name:this.url_name});
         return _event.length ? _event[0] : {};
       },
-      units(){
-        return this.groups.length ? this.groups[0].units : [];
-      },
       mode(){
         return this.step.match(/input$/) ? 'edit' : 'view';
       },
@@ -63,6 +59,9 @@
     },
     created(){
       console.log('EventDetailCreated');
+      //console.log(this.$getUnitData('event'));
+      this.units = this.$getUnitData('event');
+
     },
     components:{
       FormUnit
