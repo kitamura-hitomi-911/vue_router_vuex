@@ -44,4 +44,7 @@ export default class ItemData {
             }
         });
     }
+    setList(list){
+        this.list = list;
+    }
 }

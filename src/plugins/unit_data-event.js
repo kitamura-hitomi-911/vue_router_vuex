@@ -49,20 +49,7 @@ export default [
                 name: 'checkboxtest',
                 label: '',
                 form_type: 'input_checkbox',
-                list: [
-                    {
-                        label: 'その1',
-                        value: 1
-                    },
-                    {
-                        label: 'その2',
-                        value: 2
-                    },
-                    {
-                        label: 'その3',
-                        value: 3
-                    },
-                ],
+                list: [],
                 required: true
             }
         ]

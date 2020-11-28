@@ -42,4 +42,9 @@ export default class UnitData {
 
         });
     }
+    getItemByName(name){
+        return this.items.reduce((ret, item)=>{
+            return item.name === name ? item : ret;
+        }, null);
+    }
 }

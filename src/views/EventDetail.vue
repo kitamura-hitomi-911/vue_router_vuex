@@ -132,6 +132,23 @@
           }
         );
         this.setPageTitle();
+        this.units.forEach(unit => {
+          let tgt_item = unit.getItemByName('checkboxtest');
+          tgt_item && tgt_item.setList([
+            {
+              label: 'その1',
+              value: 1
+            },
+            {
+              label: 'その2',
+              value: 2
+            },
+            {
+              label: 'その3',
+              value: 3
+            },
+          ]);
+        })
       },
       submitForm(){
         console.log('送信');
